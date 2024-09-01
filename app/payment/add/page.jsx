@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 export default function AddPayment() {
   const [amount, setAmount] = useState("");
@@ -10,6 +11,8 @@ export default function AddPayment() {
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
   const [flat, setFlat] = useState('');
+
+  const router = useRouter();
 
   // Handle the change event when a different option is selected
   const handleMonthChange = (event) => {
@@ -32,7 +35,7 @@ export default function AddPayment() {
     try {
       const { data } = await axios.post("/api/payment", { amount, month,year,flat });
       //localStorage.setItem("token", data.token);
-      router.push("/dashboard"); // Redirect to dashboard after successful login
+      router.push("/payment"); // Redirect to dashboard after successful login
     } catch (err) {
       setError("Invalid credentials");
     }
