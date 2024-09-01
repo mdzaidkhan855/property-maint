@@ -15,7 +15,7 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post('/api/auth/login', { email, password });
+      const { data } = await axios.post('/api/login', { email, password });
       localStorage.setItem('token', data.token);
       router.push('/dashboard'); // Redirect to dashboard after successful login
     } catch (err) {

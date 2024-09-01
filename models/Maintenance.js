@@ -3,34 +3,35 @@
 import mongoose from 'mongoose';
 
 const MaintenanceSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+  // user: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'User',
+  //   required: true,
+  // },
+  flat:String,
+  year: {
+    type: Number,
     required: true,
   },
-  issue: {
-    type: String,
-    required: [true, 'Please describe the issue'],
-  },
-  status: {
-    type: String,
-    enum: ['pending', 'in-progress', 'resolved'],
-    default: 'pending',
-  },
-  comments: [
+  payments: [
     {
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-      },
-      comment: {
+      month: {
         type: String,
-        required: [true, 'Please add a comment'],
+        enum: [
+          'January', 'February', 'March', 'April', 'May', 'June',
+          'July', 'August', 'September', 'October', 'November', 'December'
+        ],
+        required: true,
       },
-      createdAt: {
-        type: Date,
-        default: Date.now,
+      amount: {
+        type: Number,
+        required: true,
       },
+      status: {
+        type: String,
+        enum: ['paid', 'pending'],
+        default: 'pending',
+      }
     },
   ],
 }, {
