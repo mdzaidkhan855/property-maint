@@ -9,29 +9,25 @@ const MaintenanceSchema = new mongoose.Schema({
   //   required: true,
   // },
   flat:String,
-  year: {
-    type: Number,
-    required: true,
-  },
+  // year: {
+  //   type: Number,
+  //   required: true,
+  // },
   payments: [
     {
-      month: {
-        type: String,
-        enum: [
-          'January', 'February', 'March', 'April', 'May', 'June',
-          'July', 'August', 'September', 'October', 'November', 'December'
-        ],
-        required: true,
-      },
-      amount: {
-        type: Number,
-        required: true,
-      },
-      status: {
-        type: String,
-        enum: ['paid', 'pending'],
-        default: 'pending',
-      }
+      year:String,
+      January:String,
+      February:String,
+      March:String,
+      April:String,
+      May:String,
+      June:String,
+      July:String,
+      August:String,
+      September:String,
+      October:String,
+      November:String,
+      December:String
     },
   ],
 }, {

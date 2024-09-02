@@ -13,7 +13,8 @@ export default function AddPayment() {
   const [flat, setFlat] = useState('');
 
   const router = useRouter();
-
+  const reportYear = new Date().getFullYear();
+  
   // Handle the change event when a different option is selected
   const handleMonthChange = (event) => {
     setMonth(event.target.value);
@@ -33,9 +34,9 @@ export default function AddPayment() {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post("/api/payment", { amount, month,year,flat });
+      const { data } = await axios.post("/api/payment/add", { amount, month,year,flat });
       //localStorage.setItem("token", data.token);
-      router.push("/payment"); // Redirect to dashboard after successful login
+      router.push(`/payment/${reportYear}`); // Redirect to dashboard after successful login
     } catch (err) {
       setError("Invalid credentials");
     }

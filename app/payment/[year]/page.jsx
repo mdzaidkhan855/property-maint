@@ -5,16 +5,19 @@ import dbConnect from '@/utils/dbConnect';
 import Maintenance from '@/models/Maintenance';
 import axios from 'axios';
 //import { useState } from 'react';
+//import { useRouter } from 'next/navigation';
 
-export default async function Payment(){
+export default async function Payment({params}){
     await dbConnect();
 
+    //const router = useRouter();
+    const  year  = params.year;
     //const [year, setYear] = useState(new Date().getFullYear())
     
     let records;
     try {
         //records = await axios.post('/api/maintainance', { year });
-        records = await Maintenance.find({}); 
+        records = await Maintenance.find({'payments.year': year}); 
         console.log(records)
         //res.status(200).json({ success: true, data: records });
       } catch (error) {
@@ -23,7 +26,10 @@ export default async function Payment(){
     return (
         
         <div className="container mx-auto mt-10">
-            <h1 className="text-3xl font-bold mb-4">Maintenance Report for </h1>
+            
+            <h1 className="text-3xl font-bold mb-4">Maintenance Report for {year} </h1>                
+            
+            
             <table className="min-w-full bg-white">
                 <thead>
                     <tr>
@@ -49,14 +55,13 @@ export default async function Payment(){
                     records.map(record =>(
                         <tr key={record._id}>
                             <td className="py-2 px-4 border-b text-center">{record.flat}</td>
-                            {/* <td className="py-2 px-4 border-b text-center">2024</td> */}
+                            <td className="py-2 px-4 border-b text-center">{year}</td>
                             {
                                 record.payments.map(payment => {
-                                    // if(payment.year === '2024'){
+                                    if(payment.year === year){
 
                                         return(
                                             <>
-                                                <td className="py-2 px-4 border-b text-center">{payment.year }</td>
                                                 <td className="py-2 px-4 border-b text-center">{payment.January || '0.0'}</td>
                                                 <td className="py-2 px-4 border-b text-center">{payment.February || '0.0'}</td>
                                                 <td className="py-2 px-4 border-b text-center">{payment.March || '0.0'}</td>
@@ -73,7 +78,7 @@ export default async function Payment(){
                                             </>
                                             
                                         )
-                                    //}
+                                    }
                                 })
                             }
                             
